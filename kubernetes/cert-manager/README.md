@@ -22,7 +22,7 @@ cert-manager-webhook-54754dcdfd-dl498      1/1     Running   0          98s
 1. Create Kubernetes secrect for the AWS secret access key
 
 ```
-kubectl create secret generic route53-credentials --from-literal=secret-access-key="abc123"
+kubectl create secret generic route53-credentials -n cert-manager --from-literal=secret-access-key="abc123"
 ```
 
 2. Deploy the ClusterIssuer
