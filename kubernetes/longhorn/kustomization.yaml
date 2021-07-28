@@ -1,0 +1,4 @@
+namespace: longhorn-system
+resources:
+  - ingress.yaml
+  - storageclass.yaml
