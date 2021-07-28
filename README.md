@@ -8,3 +8,4 @@
 | metallb | MetalLB Kubernetes loadbalancer |
 | cert-manager | Automatic SSL cert management |
 | longhorn | Longhorn distributed pod storage |
+| unifi-controller | Ubiquity UniFi controller |

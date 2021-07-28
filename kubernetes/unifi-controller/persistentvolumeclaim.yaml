@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: unifi-controller
+  name: unifi-controller
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: homelab-longhorn
+  resources:
+    requests:
+      storage: 5Gi
+status: {}
