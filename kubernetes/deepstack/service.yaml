@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: deepstack
+  name: deepstack
+spec:
+  selector:
+    app: deepstack
+  ports:
+    - port: 5000

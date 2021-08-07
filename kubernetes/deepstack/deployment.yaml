@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deepstack
+  labels:
+    app: deepstack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deepstack
+  template:
+    metadata:
+      labels:
+        app: deepstack
+    spec:
+      containers:
+        - name: deepstack
+          image: deepquestai/deepstack:latest
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - mountPath: /datastore
+              name: deepstack-datastore
+          env:
+            - name: VISION-SCENE
+              value: "True"
+      volumes:
+        - name: deepstack-datastore
+          persistentVolumeClaim:
+            claimName: deepstack-datastore
