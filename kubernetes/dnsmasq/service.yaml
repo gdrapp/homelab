@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: dnsmasq
+  name: dnsmasq
+spec:
+  type: LoadBalancer
+  ports:
+    - name: "53"
+      port: 53
+      protocol: UDP
+    - name: "67"
+      port: 67
+      protocol: UDP
+  externalTrafficPolicy: Local
+  selector:
+    app: dnsmasq

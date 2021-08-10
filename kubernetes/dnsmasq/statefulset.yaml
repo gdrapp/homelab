@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: dnsmasq
+  name: dnsmasq
+spec:
+  replicas: 1
+  serviceName: dnsmasq
+  selector:
+    matchLabels:
+      app: dnsmasq
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: dnsmasq
+    spec:
+      containers:
+        - image: ghcr.io/gdrapp/dnsmasq-container:master
+          name: dnsmasq
+          ports:
+            - containerPort: 53
+              protocol: UDP
+            - containerPort: 67
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /var/lib/misc
+              subPath: dnsmasq.leases
+              name: dnsmasq-leases
+            - mountPath: /etc/dnsmasq.conf
+              subPath: dnsmasq.conf
+              name: config
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
+      restartPolicy: Always
+      volumes:
+        - name: dnsmasq-leases
+          persistentVolumeClaim:
+            claimName: dnsmasq-leases
+        - name: config
+          configMap:
+            name: dnsmasq

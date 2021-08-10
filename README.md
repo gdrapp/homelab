@@ -13,3 +13,4 @@
 | channels-dvr | Channels DVR server |
 | smarter-device-manager | Expose USB devices to containers |
 | deepstack | DeepStack AI engine |
+| dnsmasq | dnsmasq DNS & DHCP server |

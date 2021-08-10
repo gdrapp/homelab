@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+namespace: dnsmasq
+metadata:
+  name: dnsmasq
+data:
+  dnsmasq.conf: |
+    # DNS Config
+    domain-needed
+    bogus-priv
+    no-resolv
+    no-hosts
+    server=8.8.8.8
+    server=8.8.4.4
+    domain=gregrapp.net
+    log-queries
+
+    # DHCP Config
+    #dhcp-authoritative
+    log-dhcp
