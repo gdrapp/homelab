@@ -34,6 +34,13 @@ spec:
           securityContext:
             capabilities:
               add: ["NET_ADMIN"]
+          resources:
+            requests:
+              memory: 4Mi
+              cpu: 100m
+            limits:
+              memory: 8Mi
+              cpu: 1
       restartPolicy: Always
       volumes:
         - name: dnsmasq-leases
