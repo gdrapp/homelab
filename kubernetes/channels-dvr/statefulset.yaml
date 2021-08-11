@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: channels-dvr
+  name: channels-dvr
+spec:
+  replicas: 1
+  serviceName: channels-dvr
+  selector:
+    matchLabels:
+      app: channels-dvr
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: channels-dvr
+    spec:
+      containers:
+        - image: fancybits/channels-dvr
+          name: channels-dvr
+          ports:
+            - containerPort: 8089
+          volumeMounts:
+            - mountPath: /channels-dvr
+              name: channels-dvr
+            - mountPath: /recordings
+              name: recordings
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 1
+            limits:
+              gpu.intel.com/i915: 1
+              memory: 1Gi
+              cpu: 2
+      restartPolicy: Always
+      volumes:
+        - name: channels-dvr
+          persistentVolumeClaim:
+            claimName: channels-dvr
+        - name: recordings
+          persistentVolumeClaim:
+            claimName: channels-dvr-recordings

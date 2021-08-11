@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    app: channels-dvr
+  name: channels-dvr-recordings
+spec:
+  capacity:
+    storage: 500Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: synology.gregrapp.net
+    path: "/volume1/dvr"
