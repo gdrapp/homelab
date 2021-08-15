@@ -14,3 +14,4 @@
 | smarter-device-manager | Expose USB devices to containers |
 | deepstack | DeepStack AI engine |
 | dnsmasq | dnsmasq DNS & DHCP server |
+| rtlamr | rtl-sdr receiver for smart meters |

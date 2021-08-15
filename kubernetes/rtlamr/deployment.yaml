@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtlamr
+  labels:
+    app: rtlamr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rtlamr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rtlamr
+    spec:
+      containers:
+        - name: rtl-tcp
+          image: ghcr.io/gdrapp/rtl-sdr-container:master
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 1234
+          command: ["rtl_tcp"]
+          resources:
+            limits:
+              gregrapp.net/rtl2832u: 1
+          securityContext:
+            privileged: true
+        - name: rtlamr
+          image: ghcr.io/gdrapp/rtlamr-mqtt-container:master
+          imagePullPolicy: Always
+          env:
+            - name: MQTT_HOST
+              value: 192.168.0.7
+            - name: MQTT_PORT
+              value: "1883"
+            - name: MQTT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt
+                  key: username
+            - name: MQTT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt
+                  key: password
+            - name: MQTT_BASE_TOPIC
+              value: rtlamr
+            - name: METER_ID
+              value: 38260230,34406225
+          resources:
+            requests:
+              memory: 10Mi
+              cpu: 0.1
+            limits:
+              memory: 100Mi
+              cpu: 0.5
