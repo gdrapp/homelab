@@ -17,7 +17,7 @@ spec:
         app: channels-dvr
     spec:
       containers:
-        - image: fancybits/channels-dvr
+        - image: fancybits/channels-dvr:tve
           name: channels-dvr
           ports:
             - containerPort: 8089
