@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unbound
+  labels:
+    app: unbound
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: unbound
+  template:
+    metadata:
+      labels:
+        app: unbound
+    spec:
+      containers:
+        - name: unbound
+          image: ghcr.io/gdrapp/unbound-container:master
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 53
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /etc/unbound/unbound.conf
+              subPath: unbound.conf
+              name: config
+          resources:
+            requests:
+              memory: 16Mi
+              cpu: 100m
+            limits:
+              memory: 32Mi
+              cpu: 200m
+      volumes:
+        - name: config
+          configMap:
+            name: unbound
