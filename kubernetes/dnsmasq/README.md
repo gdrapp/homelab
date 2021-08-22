@@ -4,14 +4,14 @@ dnsmasq DNS and DHCP server
 
 ## Installation
 
-Apply the dnsmasq ConfigMap
-```bash
-kubectl apply -f kubernetes/dnsmasq/configmap.yaml
-```
-
-Apply the remaining dnsmasq Kubernetes config
+Apply the dnsmasq Kubernetes config
 ```bash
 kubectl apply -k kubernetes/dnsmasq
+```
+
+Apply the dnsmasq ConfigMap
+```bash
+kubectl apply -n dnsmasq -f configmap.yaml
 ```
 
 ## Configuration
