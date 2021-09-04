@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scripts
+data:
+  postdown.sh: |
+    #!/bin/sh
+    iptables -F FORWARD
+    iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+  postup.sh: |
+    #!/bin/sh
+    iptables -A FORWARD -i $1 -j ACCEPT
+    iptables -A FORWARD -o $1 -j ACCEPT
+    iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+    wg set $1 private-key /etc/wireguard/$1.privatekey

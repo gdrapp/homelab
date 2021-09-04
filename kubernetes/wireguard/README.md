@@ -14,6 +14,11 @@ sudo ctr run --rm ghcr.io/gdrapp/wireguard-container:master wg bash -c 'wg genke
 sudo kubectl apply -k kubernetes/wireguard/
 ```
 
+Apply the scripts ConfigMap
+```bash
+kubectl apply -n wireguard -f kubernetes/wireguard/configmap.yaml
+```
+
 4. Create the K8S secret for the Wireguard private key 
 ```bash
 sudo kubectl -n wireguard create secret generic wg0-privatekey --from-file=privatekey=privatekey

@@ -24,6 +24,10 @@ spec:
         - name: wg0-conf
           configMap:
             name: wg0-conf
+        - name: scripts
+          configMap:
+            name: scripts
+            defaultMode: 0777
       containers:
         - name: wireguard
           image: ghcr.io/gdrapp/wireguard-container:master
@@ -44,6 +48,9 @@ spec:
             - name: wg0-conf
               mountPath: /etc/wireguard/wg0.conf
               subPath: wg0.conf
+              readOnly: true
+            - name: scripts
+              mountPath: /usr/local/sbin
               readOnly: true
           ports:
             - containerPort: 51820
