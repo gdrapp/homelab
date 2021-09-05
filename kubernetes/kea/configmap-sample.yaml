@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: kea
+data:
+    kea-dhcp4.conf: |
+        {
+            "Dhcp4": {
+                "valid-lifetime": 86400,
+                "interfaces-config": {
+                    "interfaces": [
+                        "*"
+                    ]
+                },
+                "lease-database": {
+                    "type": "memfile",
+                    "persist": true,
+                    "name": "/var/lib/kea/dhcp4.leases"
+                },
+                "option-data": [
+                    {
+                        "name": "domain-name-servers",
+                        "data": "192.168.0.1"
+                    },
+                    {
+                        "name": "domain-search",
+                        "data": "domain.com"
+                    },
+                    {
+                        "name": "ntp-servers",
+                        "data": "216.239.35.4,216.239.35.8"
+                    }
+                ],
+                "subnet4": [
+                    {
+                        "subnet": "192.168.0.0/24",
+                        "pools": [
+                            {
+                                "pool": "192.168.0.100 - 192.168.0.200"
+                            }
+                        ],
+                        "reservations": [
+                            {"hw-address": "aa:bb:cc:dd:ee:ff", "ip-address": "192.168.0.10"}
+                        ]
+                    }
+                ]
+            }
+        }

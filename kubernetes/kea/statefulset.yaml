@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kea-dhcp4
+  labels:
+    app: kea-dhcp4
+spec:
+  replicas: 1
+  serviceName: kea-dhcp4
+  selector:
+    matchLabels:
+      app: kea-dhcp4
+  template:
+    metadata:
+      labels:
+        app: kea-dhcp4
+    spec:
+      containers:
+        - name: kea-dhcp4
+          image: ghcr.io/gdrapp/kea-container:master
+          imagePullPolicy: Always
+          command: ["/usr/sbin/kea-dhcp4", "-c", "/etc/kea/kea-dhcp4.conf"]
+          ports:
+            - containerPort: 67
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /etc/kea
+              name: config
+            - mountPath: /var/lib/kea
+              subPath: dhcp4.leases
+              name: dhcp4-leases
+          resources:
+            requests:
+              memory: 16Mi
+              cpu: 100m
+            limits:
+              memory: 32Mi
+              cpu: 200m
+      volumes:
+        - name: config
+          configMap:
+            name: kea
+        - name: dhcp4-leases
+          persistentVolumeClaim:
+            claimName: dhcp4-leases

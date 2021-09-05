@@ -16,3 +16,4 @@
 | dnsmasq | dnsmasq DNS & DHCP server |
 | rtlamr | rtl-sdr receiver for smart meters |
 | unbound | Unbound DNS server |
+| kea | Kea DHCP server |
