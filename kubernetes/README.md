@@ -35,7 +35,7 @@ curl --header "Content-Type: application/json-patch+json" \
 http://localhost:8001/api/v1/nodes/<your-node-name>/status
 ```
 
-## Remove an extended resource from a node
+### Remove an extended resource from a node
 
 Note: ~1 is the encoding for the character / in the patch path
 
@@ -44,4 +44,18 @@ curl --header "Content-Type: application/json-patch+json" \
 --request PATCH \
 --data '[{"op": "remove", "path": "/status/capacity/smarter-devices~1rtlsdr2"}]' \
 http://localhost:8001/api/v1/nodes/<your-node-name>/status
+```
+
+## Node Maintenance
+
+Drain pods from a node
+
+```bash
+kubectl drain server2 --ignore-daemonsets=true
+```
+
+Uncordon a node (allow pods to return)
+
+```bash
+kubectl uncordon server2
 ```

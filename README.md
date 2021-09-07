@@ -17,3 +17,4 @@
 | rtlamr | rtl-sdr receiver for smart meters |
 | unbound | Unbound DNS server |
 | kea | Kea DHCP server |
+| esphome | ESPHome server |
