@@ -59,3 +59,25 @@ Uncordon a node (allow pods to return)
 ```bash
 kubectl uncordon server2
 ```
+
+## Resize a persistent volume
+
+1. Delete the Statefulset so the pods don't get auto-recreated
+```bash
+kubectl delete sts --cascade=false [statefulset name] -n [namespace]
+```
+
+2. Update the PersistentVolumeClaim with new size and apply it
+```bash
+kubectl apply -f persistentvolumeclaim.yaml -n [namespace]
+```
+
+3. Delete pods so that the volume can resize
+```bash
+kubectl delete pod --cascade=orphan [pod name] -n [namespace]
+```
+
+4. Redeploy the Statefulset
+```bash
+kubectl apply -f statefulset.yaml -n [namespace]
+```
