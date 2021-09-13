@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto
+  labels:
+    app: mosquitto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mosquitto
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+    spec:
+      containers:
+        - name: mosquitto
+          image: eclipse-mosquitto:2.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: mqtt-listener
+              containerPort: 1883
+          livenessProbe:
+            tcpSocket:
+              port: mqtt-listener
+            initialDelaySeconds: 15
+          volumeMounts:
+            - mountPath: /mosquitto/config/mosquitto.conf
+              subPath: mosquitto.conf
+              name: config
+            - mountPath: /mosquitto/config/passwd
+              name: passwd
+              subPath: passwd
+              readOnly: true
+          resources:
+            requests:
+              memory: 16Mi
+              cpu: 100m
+            limits:
+              memory: 32Mi
+              cpu: 200m
+      volumes:
+        - name: config
+          configMap:
+            name: mosquitto
+        - name: passwd
+          secret:
+            secretName: passwd

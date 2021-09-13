@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto
+data:
+  mosquitto.conf: |
+    listener 1883
+    persistent_client_expiration 1m
+    password_file /mosquitto/config/passwd

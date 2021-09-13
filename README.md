@@ -19,3 +19,4 @@
 | kea | Kea DHCP server |
 | esphome | ESPHome server |
 | mariadb | MariaDB database server |
+| mosquitto | Mosquitto MQTT server |
