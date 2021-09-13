@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: homeassistant
+  labels:
+    app: homeassistant
+spec:
+  replicas: 1
+  serviceName: homeassistant
+  selector:
+    matchLabels:
+      app: homeassistant
+  template:
+    metadata:
+      labels:
+        app: homeassistant
+    spec:
+      containers:
+        - name: homeassistant
+          image: ghcr.io/home-assistant/home-assistant:2021.9.5
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: homeassistant
+              containerPort: 8123
+            - name: homekit
+              containerPort: 21063
+          volumeMounts:
+            - mountPath: /config
+              name: homeassistant-config
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            httpGet:
+              path: /
+              port: homeassistant
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 500m
+            limits:
+              memory: 1024Mi
+              cpu: 1000m
+              smarter-devices/zwave: 1
+              smarter-devices/zigbee: 1
+      volumes:
+        - name: homeassistant-config
+          persistentVolumeClaim:
+            claimName: homeassistant-config

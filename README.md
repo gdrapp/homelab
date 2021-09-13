@@ -20,3 +20,4 @@
 | esphome | ESPHome server |
 | mariadb | MariaDB database server |
 | mosquitto | Mosquitto MQTT server |
+| homeassistant | Home Assistant home automation server |
