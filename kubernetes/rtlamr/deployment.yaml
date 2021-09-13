@@ -33,7 +33,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: MQTT_HOST
-              value: 192.168.0.7
+              value: mosquitto.mosquitto.svc.cluster.local
             - name: MQTT_PORT
               value: "1883"
             - name: MQTT_USERNAME
