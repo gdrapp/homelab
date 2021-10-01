@@ -22,3 +22,4 @@
 | mosquitto | Mosquitto MQTT server |
 | homeassistant | Home Assistant home automation server |
 | kubernetes-dashboard | Kubernetes Dashboard |
+| velero | Velero backups |
