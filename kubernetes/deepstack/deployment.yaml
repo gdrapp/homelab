@@ -23,7 +23,7 @@ spec:
             - mountPath: /datastore
               name: deepstack-datastore
           env:
-            - name: VISION-SCENE
+            - name: VISION-DETECTION
               value: "True"
       volumes:
         - name: deepstack-datastore
