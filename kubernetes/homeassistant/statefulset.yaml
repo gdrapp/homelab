@@ -27,6 +27,8 @@ spec:
           volumeMounts:
             - mountPath: /config
               name: homeassistant-config
+            - mountPath: /media
+              name: homeassistant-media
           livenessProbe:
             initialDelaySeconds: 30
             periodSeconds: 15
@@ -46,3 +48,6 @@ spec:
         - name: homeassistant-config
           persistentVolumeClaim:
             claimName: homeassistant-config
+        - name: homeassistant-media
+          persistentVolumeClaim:
+            claimName: homeassistant-media
