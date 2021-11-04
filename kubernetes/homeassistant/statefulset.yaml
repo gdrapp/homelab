@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: homeassistant
-          image: ghcr.io/home-assistant/home-assistant:2021.10.4
+          image: ghcr.io/home-assistant/home-assistant:2021.10.7
           imagePullPolicy: IfNotPresent
           ports:
             - name: homeassistant
