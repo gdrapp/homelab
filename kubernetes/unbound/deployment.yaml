@@ -17,7 +17,7 @@ spec:
       containers:
         - name: unbound
           image: ghcr.io/gdrapp/unbound-container:master
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 53
               protocol: UDP
