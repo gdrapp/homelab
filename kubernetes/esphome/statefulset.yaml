@@ -17,20 +17,20 @@ spec:
     spec:
       containers:
         - name: esphome
-          image: ghcr.io/esphome/esphome:2021.8.2
+          image: ghcr.io/esphome/esphome:2021.10.3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 6052
           volumeMounts:
             - mountPath: /config
               name: esphome-config
-          # resources:
-          #   requests:
-          #     memory: 16Mi
-          #     cpu: 100m
-          #   limits:
-          #     memory: 32Mi
-          #     cpu: 200m
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 1000m
       volumes:
         - name: esphome-config
           persistentVolumeClaim:
