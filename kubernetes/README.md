@@ -81,3 +81,28 @@ kubectl apply -f persistentvolumeclaim.yaml -n [namespace]
 ```bash
 kubectl apply -f statefulset.yaml -n [namespace]
 ```
+
+## K3S cluster upgrade
+
+Perform steps on each node in the cluster.
+
+1. Drain the node to be upgraded
+```bash
+kubectl drain server2 --ignore-daemonsets=true
+```
+
+2. Replace the k3s binary at /usr/local/bin with new version
+```bash
+cd /usr/local/bin
+mv k3s k3s.old
+mv /tmp/k3s /usr/local/bin
+chmod +x k3s
+chown root.root k3s
+```
+
+3. Restart server or start K3S
+
+4. Uncordon node (allow pods to return)
+```bash
+kubectl uncordon server2
+```
