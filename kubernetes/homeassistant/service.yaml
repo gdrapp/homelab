@@ -16,6 +16,8 @@ metadata:
   labels:
     app: homeassistant
   name: homekit
+  annotations:
+    metallb.universe.tf/allow-shared-ip: homekit
 spec:
   type: LoadBalancer
   loadBalancerIP: 192.168.0.37
@@ -23,3 +25,19 @@ spec:
     app: homeassistant
   ports:
     - port: 21063
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: homeassistant
+  name: homekit-front-door-camera
+  annotations:
+    metallb.universe.tf/allow-shared-ip: homekit
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.0.37
+  selector:
+    app: homeassistant
+  ports:
+    - port: 21068
