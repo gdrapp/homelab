@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: zwavejs2mqtt
+  name: zwave-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: homelab-longhorn
+  resources:
+    requests:
+      storage: 500Mi

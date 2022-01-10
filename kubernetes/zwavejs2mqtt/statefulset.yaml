@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zwavejs2mqtt
+  labels:
+    app: zwavejs2mqtt
+spec:
+  replicas: 1
+  serviceName: zwavejs2mqtt
+  selector:
+    matchLabels:
+      app: zwavejs2mqtt
+  template:
+    metadata:
+      labels:
+        app: zwavejs2mqtt
+    spec:
+      containers:
+        - name: zwavejs2mqtt
+          image: zwavejs/zwavejs2mqtt:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: web-interface
+              containerPort: 8091
+            - name: websocket-svr
+              containerPort: 3000
+          volumeMounts:
+            - mountPath: /usr/src/app/store
+              name: zwave-config
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            httpGet:
+              path: /
+              port: web-interface
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 500m
+            limits:
+              memory: 1024Mi
+              cpu: 1000m
+              # smarter-devices/zwave: 1
+      volumes:
+        - name: zwave-config
+          persistentVolumeClaim:
+            claimName: zwave-config

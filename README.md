@@ -23,3 +23,4 @@
 | homeassistant | Home Assistant home automation server |
 | kubernetes-dashboard | Kubernetes Dashboard |
 | velero | Velero backups |
+| zwavejs2mqtt | ZWavejs2Mqtt server |
