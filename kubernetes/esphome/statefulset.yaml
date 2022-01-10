@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: esphome
-          image: ghcr.io/esphome/esphome:2021.10.3
+          image: ghcr.io/esphome/esphome:2021.12.3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 6052
