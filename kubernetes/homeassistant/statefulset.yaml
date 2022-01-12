@@ -42,7 +42,6 @@ spec:
             limits:
               memory: 1024Mi
               cpu: 1000m
-              smarter-devices/zwave: 1
               smarter-devices/zigbee: 1
       volumes:
         - name: homeassistant-config
