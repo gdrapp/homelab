@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: zwavejs2mqtt
-          image: zwavejs/zwavejs2mqtt:latest
+          image: zwavejs/zwavejs2mqtt:6.3.1
           imagePullPolicy: IfNotPresent
           ports:
             - name: web-interface
@@ -40,7 +40,7 @@ spec:
             limits:
               memory: 1024Mi
               cpu: 1000m
-              # smarter-devices/zwave: 1
+              smarter-devices/zwave: 1
       volumes:
         - name: zwave-config
           persistentVolumeClaim:
