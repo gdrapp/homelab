@@ -43,6 +43,47 @@ spec:
               memory: 1024Mi
               cpu: 1000m
               smarter-devices/zigbee: 1
+        - name: hass-configurator
+          image: causticlab/hass-configurator-docker:0.4.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: configurator
+              containerPort: 3218
+          volumeMounts:
+            - mountPath: /hass-config
+              name: homeassistant-config
+          envFrom:
+            - configMapRef:
+                name: hass-configurator
+          env:
+            - name: HC_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hass-configurator
+                  key: username
+            - name: HC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hass-configurator
+                  key: password
+            - name: HC_HASS_API_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hass-configurator
+                  key: hass-api-password
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            tcpSocket:
+              port: configurator
+          resources:
+            requests:
+              memory: 16Mi
+              cpu: 10m
+            limits:
+              memory: 32Mi
+              cpu: 100m
+
       volumes:
         - name: homeassistant-config
           persistentVolumeClaim:
