@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    app: airflow
+  name: dags
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: synology.gregrapp.net
+    path: "/volume1/airflow-dags"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    app: airflow
+  name: logs
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: synology.gregrapp.net
+    path: "/volume1/airflow-logs"

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: airflow
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+  labels:
+    app: airflow
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - airflow.gregrapp.net
+      secretName: airflow-tls
+  rules:
+    - host: airflow.gregrapp.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: airflow-webserver
+                port:
+                  name: airflow-ui

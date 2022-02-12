@@ -24,3 +24,4 @@
 | kubernetes-dashboard | Kubernetes Dashboard |
 | velero | Velero backups |
 | zwavejs2mqtt | ZWavejs2Mqtt server |
+| airflow | Apache Airflow |

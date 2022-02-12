@@ -1,0 +1,190 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: airflow-scheduler
+  labels:
+    app: airflow
+    component: scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airflow
+      component: scheduler
+  template:
+    metadata:
+      labels:
+        app: airflow
+        component: scheduler
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+    spec:
+      nodeSelector: {}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: scheduler
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      tolerations: []
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      serviceAccountName: airflow-scheduler
+      securityContext:
+        runAsUser: 50000
+        fsGroup: 50000
+      initContainers:
+        - name: wait-for-airflow-migrations
+          resources: {}
+          image: airflow
+          imagePullPolicy: IfNotPresent
+          args:
+            - airflow
+            - db
+            - check-migrations
+            - --migration-wait-timeout=60
+          envFrom: []
+          env:
+            # Dynamically created environment variables
+            # Dynamically created secret envs
+            # Extra env
+            # Hard Coded Airflow Envs
+            - name: AIRFLOW__CORE__FERNET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-fernet-key
+                  key: fernet-key
+            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-metadata
+                  key: connection
+            - name: AIRFLOW_CONN_AIRFLOW_DB
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-metadata
+                  key: connection
+            - name: AIRFLOW__WEBSERVER__SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-webserver-secret-key
+                  key: webserver-secret-key
+        - name: nfs-permission-fixer
+          image: airflow
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: dags
+              mountPath: "/opt/airflow/dags"
+            - name: logs
+              mountPath: "/opt/airflow/logs"
+          command:
+            - bash
+            - -c
+            - (chmod 770 /opt/airflow/dags; chown 50000 /opt/airflow/dags; chmod 770 /opt/airflow/logs; chown 50000 /opt/airflow/logs)
+      containers:
+        # Always run the main scheduler container.
+        - name: scheduler
+          image: airflow
+          imagePullPolicy: IfNotPresent
+          args:
+            - bash
+            - -c
+            - exec airflow scheduler
+          envFrom: []
+          env:
+            # Dynamically created environment variables
+            # Dynamically created secret envs
+            # Extra env
+            # Hard Coded Airflow Envs
+            - name: AIRFLOW__CORE__FERNET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-fernet-key
+                  key: fernet-key
+            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-metadata
+                  key: connection
+            - name: AIRFLOW_CONN_AIRFLOW_DB
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-metadata
+                  key: connection
+            - name: AIRFLOW__WEBSERVER__SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-webserver-secret-key
+                  key: webserver-secret-key
+          livenessProbe:
+            initialDelaySeconds: 10
+            timeoutSeconds: 20
+            failureThreshold: 5
+            periodSeconds: 60
+            exec:
+              command:
+                - /entrypoint
+                - python
+                - -Wignore
+                - -c
+                - |
+                  import os
+                  os.environ['AIRFLOW__CORE__LOGGING_LEVEL'] = 'ERROR'
+                  os.environ['AIRFLOW__LOGGING__LOGGING_LEVEL'] = 'ERROR'
+
+                  from airflow.jobs.scheduler_job import SchedulerJob
+                  from airflow.utils.db import create_session
+                  from airflow.utils.net import get_hostname
+                  import sys
+
+                  with create_session() as session:
+                      job = session.query(SchedulerJob).filter_by(hostname=get_hostname()).order_by(
+                          SchedulerJob.latest_heartbeat.desc()).limit(1).first()
+
+                  sys.exit(0 if job.is_alive() else 1)
+          resources: {}
+          volumeMounts:
+            - name: config
+              mountPath: /opt/airflow/pod_templates/pod_template_file.yaml
+              subPath: pod_template_file.yaml
+              readOnly: true
+            - name: logs
+              mountPath: "/opt/airflow/logs"
+            - name: dags
+              mountPath: "/opt/airflow/dags"
+            - name: config
+              mountPath: "/opt/airflow/airflow.cfg"
+              subPath: airflow.cfg
+              readOnly: true
+            - name: config
+              mountPath: "/opt/airflow/config/airflow_local_settings.py"
+              subPath: airflow_local_settings.py
+              readOnly: true
+        - name: scheduler-log-groomer
+          resources: {}
+          image: airflow
+          imagePullPolicy: IfNotPresent
+          args:
+            - bash
+            - /clean-logs
+          env:
+            - name: AIRFLOW__LOG_RETENTION_DAYS
+              value: "15"
+          volumeMounts:
+            - name: logs
+              mountPath: "/opt/airflow/logs"
+      volumes:
+        - name: config
+          configMap:
+            name: airflow-config
+        - name: logs
+          persistentVolumeClaim:
+            claimName: logs
+        - name: dags
+          persistentVolumeClaim:
+            claimName: dags
