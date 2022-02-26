@@ -34,6 +34,17 @@ spec:
               gpu.intel.com/i915: 1
               memory: 1Gi
               cpu: 2
+        - image: jonmaddox/pluto-for-channels
+          name: pluto-for-channels
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: 16Mi
+              cpu: 50m
+            limits:
+              memory: 16Mi
+              cpu: 50m
       restartPolicy: Always
       volumes:
         - name: channels-dvr
