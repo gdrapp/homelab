@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtl-433
+  labels:
+    app: rtl-433
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rtl-433
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rtl-433
+    spec:
+      containers:
+        - name: rtl-433
+          image: hertzg/rtl_433:latest
+          imagePullPolicy: IfNotPresent
+          args: ["-v", "-c", "/etc/rtl_433/rtl_433.conf", "-c", "/etc/rtl_433_mqtt.conf"]
+          volumeMounts:
+            - name: config
+              mountPath: /etc/rtl_433
+            - name: config-mqtt
+              mountPath: /etc/rtl_433_mqtt.conf
+              subPath: rtl_433_mqtt.conf
+              readOnly: true
+          resources:
+            requests:
+              memory: 8Mi
+              cpu: 50m
+            limits:
+              memory: 16Mi
+              cpu: 100m
+      volumes:
+        - name: config
+          configMap:
+            name: config
+        - name: config-mqtt
+          secret:
+            secretName: mqtt

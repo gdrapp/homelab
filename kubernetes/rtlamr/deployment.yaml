@@ -17,17 +17,6 @@ spec:
         app: rtlamr
     spec:
       containers:
-        - name: rtl-tcp
-          image: ghcr.io/gdrapp/rtl-sdr-container:master
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 1234
-          command: ["rtl_tcp"]
-          resources:
-            limits:
-              gregrapp.net/rtl2832u: 1
-          securityContext:
-            privileged: true
         - name: rtlamr
           image: ghcr.io/gdrapp/rtlamr-mqtt-container:master
           imagePullPolicy: Always
@@ -50,6 +39,8 @@ spec:
               value: rtlamr
             - name: METER_ID
               value: 38260230,34406225
+            - name: RTL_TCP_SERVER
+              value: 192.168.0.10:2001
           resources:
             requests:
               memory: 10Mi
