@@ -16,4 +16,4 @@ resources:
 images:
   - name: airflow
     newName: apache/airflow
-    newTag: 2.2.3
+    newTag: 2.3.0

@@ -45,7 +45,7 @@ data:
     namespace = airflow
     pod_template_file = /opt/airflow/pod_templates/pod_template_file.yaml
     worker_container_repository = apache/airflow
-    worker_container_tag = 2.2.3
+    worker_container_tag = 2.3.0
 
     [logging]
     colored_console_log = False
@@ -90,7 +90,7 @@ data:
                 secretKeyRef:
                   name: airflow-fernet-key
                   key: fernet-key
-            - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+            - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
               valueFrom:
                 secretKeyRef:
                   name: airflow-metadata
