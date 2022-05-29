@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: confd
+  labels:
+    app: mysql
+data:
+  my.cnf: |
+    [mysqld]
+    bind-address = 0.0.0.0
+    explicit_defaults_for_timestamp = 1

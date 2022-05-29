@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mysql
+  name: data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: homelab-longhorn
+  resources:
+    requests:
+      storage: 10Gi
