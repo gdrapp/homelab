@@ -11,12 +11,12 @@ kubectl apply -k kubernetes/airflow
 
 Create the fernet key
 ```bash
-kubectl create secret generic airflow-fernet-key -n airflow --from-literal fernet-key=<RANDOM STRING>
+kubectl create secret generic airflow-fernet-key -n airflow --from-literal fernet-key=$(openssl rand 32 | base64 -w0)
 ```
 
 Create the web server secret key
 ```bash
-kubectl create secret generic airflow-webserver-secret-key -n airflow --from-literal webserver-secret-key=<RANDOM STRING>
+kubectl create secret generic airflow-webserver-secret-key -n airflow --from-literal webserver-secret-key=$(openssl rand 32 | base64 -w0)
 ```
 
 Create the Airflow database connection string

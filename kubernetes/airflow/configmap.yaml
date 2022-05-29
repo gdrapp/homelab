@@ -8,7 +8,7 @@ data:
   # These are system-specified config overrides.
   airflow.cfg: |-
     [api]
-    auth_backend = airflow.api.auth.backend.deny_all
+    auth_backends = airflow.api.auth.backend.session
 
     # [celery]
     # worker_concurrency = 16
@@ -45,7 +45,7 @@ data:
     namespace = airflow
     pod_template_file = /opt/airflow/pod_templates/pod_template_file.yaml
     worker_container_repository = apache/airflow
-    worker_container_tag = 2.3.0
+    worker_container_tag = 2.3.1
 
     [logging]
     colored_console_log = False
@@ -100,6 +100,8 @@ data:
                 secretKeyRef:
                   name: airflow-metadata
                   key: connection
+            - name: _PIP_ADDITIONAL_REQUIREMENTS
+              value: pyedf
           image: dummy_image
           imagePullPolicy: IfNotPresent
           name: base
