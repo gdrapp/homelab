@@ -26,3 +26,5 @@
 | zwavejs2mqtt | ZWavejs2Mqtt server |
 | airflow | Apache Airflow |
 | mysql | MySQL database server |
+| grafana | Grafana visualization tool |
+| influxdb | InfluxDB time series database |
