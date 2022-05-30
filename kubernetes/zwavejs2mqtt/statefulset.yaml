@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: zwavejs2mqtt
-          image: zwavejs/zwavejs2mqtt:6.6.2
+          image: zwavejs/zwavejs2mqtt:6.11.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: web-interface
