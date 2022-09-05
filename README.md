@@ -28,3 +28,4 @@
 | mysql | MySQL database server |
 | grafana | Grafana visualization tool |
 | influxdb | InfluxDB time series database |
+| cloudflared | Cloudflare Tunnel daemon |
