@@ -10,13 +10,10 @@ spec:
       name: letsencrypt
     solvers:
       - dns01:
-          route53:
-            region: us-east-1
-            hostedZoneID: Z1HBQIP1JOJBDO
-            accessKeyID: AKIAZCR7GBUFLG6KCQFK
-            secretAccessKeySecretRef:
-              name: route53-credentials
-              key: secret-access-key
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-credentials
+              key: api-token
         selector:
           dnsZones:
             - "gregrapp.net"

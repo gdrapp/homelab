@@ -3,7 +3,7 @@
 ## Deploying
 
 ```bash
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.8.2/cert-manager.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.yaml
 ```
 
 ## Verifying the install
@@ -19,10 +19,10 @@ cert-manager-webhook-54754dcdfd-dl498      1/1     Running   0          98s
 
 ## Configure
 
-1. Create Kubernetes secrect for the AWS secret access key
+1. Create Kubernetes secrect for the Cloudflare API token
 
 ```
-kubectl create secret generic route53-credentials -n cert-manager --from-literal=secret-access-key="abc123"
+kubectl create secret generic cloudflare-credentials -n cert-manager --from-literal=api-token="abc123"
 ```
 
 2. Deploy the ClusterIssuer
