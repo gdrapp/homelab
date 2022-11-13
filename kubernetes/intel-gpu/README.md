@@ -5,5 +5,5 @@ Intel GPU plugin facilitates Kubernetes workload offloading by providing access 
 ## Installation
 
 ```bash
-kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin?ref=v0.21.0
+kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin?ref=v0.25.0
 ```

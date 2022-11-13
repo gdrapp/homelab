@@ -18,7 +18,7 @@ spec:
       containers:
         - name: kea-dhcp4
           image: ghcr.io/gdrapp/kea-container:master
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           command: ["/usr/sbin/kea-dhcp4", "-c", "/etc/kea/kea-dhcp4.conf"]
           ports:
             - containerPort: 67

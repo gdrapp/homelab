@@ -88,7 +88,7 @@ Perform steps on each node in the cluster.
 
 1. Drain the node to be upgraded
 ```bash
-kubectl drain server2 --ignore-daemonsets=true
+kubectl drain server2 --ignore-daemonsets=true --delete-emptydir-data
 ```
 
 2. Replace the k3s binary at /usr/local/bin with new version

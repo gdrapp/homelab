@@ -9,7 +9,7 @@ apt install nfs-common
 
 2. Install Longhorn
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.2.4/deploy/longhorn.yaml
+kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.2.6/deploy/longhorn.yaml
 ```
 
 3. Wait for the pods to enter a running state
