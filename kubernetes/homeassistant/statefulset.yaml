@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: homeassistant
-          image: ghcr.io/home-assistant/home-assistant:2022.9.7
+          image: homeassistant
           imagePullPolicy: IfNotPresent
           ports:
             - name: homeassistant
@@ -44,7 +44,7 @@ spec:
               cpu: 1000m
               smarter-devices/zigbee: 1
         - name: hass-configurator
-          image: causticlab/hass-configurator-docker:0.4.1
+          image: hass-configurator
           imagePullPolicy: IfNotPresent
           ports:
             - name: configurator

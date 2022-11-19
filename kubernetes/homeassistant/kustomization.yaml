@@ -8,3 +8,10 @@ resources:
   - service.yaml
   - ingress.yaml
   - persistentvolume.yaml
+images:
+  - name: homeassistant
+    newName: ghcr.io/home-assistant/home-assistant
+    newTag: 2022.11.2
+  - name: hass-configurator
+    newName: causticlab/hass-configurator-docker
+    newTag: 0.5.2
