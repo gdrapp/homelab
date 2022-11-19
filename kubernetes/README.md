@@ -51,7 +51,7 @@ http://localhost:8001/api/v1/nodes/<your-node-name>/status
 Drain pods from a node
 
 ```bash
-kubectl drain server2 --ignore-daemonsets=true
+kubectl drain server2 --ignore-daemonsets=true --delete-emptydir-data
 ```
 
 Uncordon a node (allow pods to return)
