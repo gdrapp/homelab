@@ -38,10 +38,8 @@ spec:
           resources:
             requests:
               memory: 512Mi
-              cpu: 500m
+              cpu: 100m
             limits:
-              memory: 1024Mi
-              cpu: 1000m
               smarter-devices/zigbee: 1
         - name: hass-configurator
           image: hass-configurator

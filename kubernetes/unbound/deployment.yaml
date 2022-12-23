@@ -14,13 +14,16 @@ spec:
       labels:
         app: unbound
     spec:
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app: unbound
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - unbound
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: unbound
           image: ghcr.io/gdrapp/unbound-container:master
@@ -34,11 +37,11 @@ spec:
               name: config
           resources:
             requests:
-              memory: 16Mi
-              cpu: 100m
+              memory: 32Mi
+              cpu: 10m
             limits:
               memory: 32Mi
-              cpu: 200m
+              cpu: 20m
       volumes:
         - name: config
           configMap:

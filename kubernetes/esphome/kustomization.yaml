@@ -7,3 +7,7 @@ resources:
   - statefulset.yaml
   - service.yaml
   - ingress.yaml
+images:
+  - name: esphome
+    newName: ghcr.io/esphome/esphome
+    newTag: 2022.9.4

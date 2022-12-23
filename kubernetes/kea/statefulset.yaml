@@ -31,11 +31,11 @@ spec:
               name: dhcp4-leases
           resources:
             requests:
-              memory: 16Mi
-              cpu: 100m
+              memory: 32Mi
+              cpu: 10m
             limits:
               memory: 32Mi
-              cpu: 200m
+              cpu: 20m
       volumes:
         - name: config
           configMap:

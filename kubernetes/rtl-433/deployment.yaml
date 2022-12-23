@@ -31,10 +31,10 @@ spec:
           resources:
             requests:
               memory: 8Mi
-              cpu: 50m
+              cpu: 10m
             limits:
               memory: 16Mi
-              cpu: 100m
+              cpu: 20m
       volumes:
         - name: config
           configMap:
