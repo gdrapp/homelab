@@ -41,6 +41,7 @@ spec:
               memory: 1024Mi
               cpu: 1000m
               smarter-devices/zwave: 1
+      priorityClassName: high
       volumes:
         - name: zwave-config
           persistentVolumeClaim:

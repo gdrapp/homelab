@@ -60,3 +60,4 @@ spec:
             capabilities:
               add:
                 - NET_ADMIN
+      priorityClassName: medium

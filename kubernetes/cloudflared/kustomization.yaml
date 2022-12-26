@@ -7,4 +7,4 @@ resources:
 images:
   - name: cloudflared
     newName: cloudflare/cloudflared
-    newTag: 2022.10.3-amd64
+    newTag: 2022.12.1-amd64

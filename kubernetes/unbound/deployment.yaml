@@ -42,6 +42,7 @@ spec:
             limits:
               memory: 32Mi
               cpu: 20m
+      priorityClassName: highest
       volumes:
         - name: config
           configMap:

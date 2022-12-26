@@ -81,7 +81,7 @@ spec:
             limits:
               memory: 32Mi
               cpu: 100m
-
+      priorityClassName: high
       volumes:
         - name: homeassistant-config
           persistentVolumeClaim:
