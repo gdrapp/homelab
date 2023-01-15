@@ -1,16 +1,14 @@
 name: Create and publish k8s_homekit_cam Docker image
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: gdrapp/k8s_homekit_cam
-  CONTAINER_PATH: containers/k8s_homekit_cam
-
 on:
   push:
     paths:
-      - 'containers/k8s_homekit_cam/**'
-      #- '${{ env.CONTAINER_PATH }}/**'
+      - 'containers/k8s-homekit-cam/**'
   workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/k8s-homekit-cam
 
 jobs:
   build-and-push-image:
@@ -43,7 +41,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: ${{ env.CONTAINER_PATH }}
+          context: containers/k8s-homekit-cam
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
