@@ -8,7 +8,8 @@ env:
 on:
   push:
     paths:
-      - '${{ env.CONTAINER_PATH }}/**'
+      - 'containers/k8s_homekit_cam/**'
+      #- '${{ env.CONTAINER_PATH }}/**'
   workflow_dispatch:
 
 jobs:
