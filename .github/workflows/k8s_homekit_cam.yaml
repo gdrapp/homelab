@@ -1,15 +1,16 @@
 name: Create and publish k8s_homekit_cam Docker image
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: k8s_homekit_cam
+  CONTAINER_PATH: containers/k8s_homekit_cam
+
 on:
   push:
     branches:
     - k8s_homekit_cam
     paths:
-    - containers/k8s_homekit_cam/**
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: k8s_homekit_cam
+    - ${{ env.CONTAINER_PATH }}/**
 
 jobs:
   build-and-push-image:
@@ -38,7 +39,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: .
+          context: ${{ env.CONTAINER_PATH }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
