@@ -2,7 +2,7 @@ name: Create and publish k8s_homekit_cam Docker image
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: gdrapp/k8s_homekit_cam:latest
+  IMAGE_NAME: gdrapp/k8s_homekit_cam
   CONTAINER_PATH: containers/k8s_homekit_cam
 
 on:
