@@ -8,7 +8,7 @@ env:
 on:
   push:
     paths:
-      - ${{ env.CONTAINER_PATH }}/**
+      - '${{ env.CONTAINER_PATH }}/**'
   workflow_dispatch:
 
 jobs:
