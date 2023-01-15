@@ -85,7 +85,7 @@ func main() {
 					},
 					Ports: []apiv1.ServicePort{
 						apiv1.ServicePort{
-							Protocol: apiv1.ProtocolTCP,
+							Protocol: apiv1.ProtocolUDP,
 							Port:     int32(port_int),
 						},
 					},
