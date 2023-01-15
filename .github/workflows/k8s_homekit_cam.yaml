@@ -9,8 +9,8 @@ on:
   push:
     branches:
     - k8s_homekit_cam
-    paths:
-    - ${{ env.CONTAINER_PATH }}/**
+    # paths:
+    # - ${{ env.CONTAINER_PATH }}/**
 
 jobs:
   build-and-push-image:
