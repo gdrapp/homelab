@@ -22,4 +22,3 @@ COPY --from=build /hass_homekit_cam_k8s /app/hass_homekit_cam_k8s
 USER nonroot:nonroot
 
 ENTRYPOINT [ "/app/hass_homekit_cam_k8s" ]
-#stuff
