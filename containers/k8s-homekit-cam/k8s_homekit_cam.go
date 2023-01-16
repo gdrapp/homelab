@@ -89,6 +89,7 @@ func main() {
 							Port:     int32(port_int),
 						},
 					},
+					ExternalTrafficPolicy: apiv1.ServiceExternalTrafficPolicyTypeLocal,
 				},
 			},
 				metav1.CreateOptions{})
