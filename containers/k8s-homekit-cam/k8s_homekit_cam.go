@@ -78,7 +78,7 @@ func main() {
 					},
 				},
 				Spec: apiv1.ServiceSpec{
-					Type:           apiv1.ServiceNodePort,
+					Type:           apiv1.ServiceTypeNodePort,
 					// LoadBalancerIP: "192.168.0.37",
 					Selector: map[string]string{
 						"app": "homeassistant",
