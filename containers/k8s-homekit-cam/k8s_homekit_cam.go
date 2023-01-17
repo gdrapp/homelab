@@ -87,7 +87,6 @@ func main() {
 						apiv1.ServicePort{
 							Protocol: apiv1.ProtocolUDP,
 							Port:     int32(port_int),
-							TargetPort:     int32(port_int),
 							NodePort: int32(port_int),
 						},
 					},
