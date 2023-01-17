@@ -78,8 +78,8 @@ func main() {
 					},
 				},
 				Spec: apiv1.ServiceSpec{
-					Type:           apiv1.ServiceTypeLoadBalancer,
-					LoadBalancerIP: "192.168.0.37",
+					Type:           apiv1.ServiceNodePort,
+					// LoadBalancerIP: "192.168.0.37",
 					Selector: map[string]string{
 						"app": "homeassistant",
 					},
@@ -87,6 +87,8 @@ func main() {
 						apiv1.ServicePort{
 							Protocol: apiv1.ProtocolUDP,
 							Port:     int32(port_int),
+							TargetPort:     int32(port_int),
+							NodePort: int32(port_int),
 						},
 					},
 					ExternalTrafficPolicy: apiv1.ServiceExternalTrafficPolicyTypeLocal,
