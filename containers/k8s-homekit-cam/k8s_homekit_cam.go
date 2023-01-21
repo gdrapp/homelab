@@ -15,25 +15,42 @@ import (
 	"k8s.io/client-go/rest"
 )
 
-
 const log_start = "Start FFmpeg with"
 const log_port = "rtcpport="
 const port_digits = 5
 
 func main() {
-	fmt.Println("Starting hass_homekit_cam_k8s...")
+	fmt.Println("Starting k8s-homekit-cam...")
 
-	if len(os.Args) < 2 {
-		panic("Log file name missing from command line arguments")
+	flagCleanupPtr := flag.String("cleanup", nil, "delete K8s services older than DURATION")
+	flagMonitorPtr := flag.String("monitor", nil, "log file to monitor")
+	flag.Parse()
+)
+	flagCleanup := *flagCleanupPtr
+	flagMonitor := *flagMonitorPtr
+
+	if flagCleanup != nil && len(flagCleanup) > 0 {
+		duration, err := time.ParseDuration(flagCleanup)
+		if err != nil {
+			panic(err.Error())
+		}	
+		cleanup_services(duration)
 	}
 
-	log_filename := os.Args[1]
+	if flagMonitor != nil && len(flagMonitor) > 0 {
+		tail_file(flagMonitor)
+	}
+}
+
+func tail_file(filename string) {
+	fmt.Println("Tailing file", filename)
 
 	// creates the in-cluster config
 	config, err := rest.InClusterConfig()
 	if err != nil {
 		panic(err.Error())
 	}
+
 	// creates the clientset
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
@@ -48,14 +65,13 @@ func main() {
 
 	// Create a tail
 	t, err := tail.TailFile(
-		log_filename, tail.Config{Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: io.SeekEnd}})
+		filename, tail.Config{Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: io.SeekEnd}})
 	if err != nil {
 		panic(err)
 	}
 
-	// Print the text of each received line
+	// Iterate each received line
 	for line := range t.Lines {
-		//fmt.Println(line.Text)
 		if strings.Contains(line.Text, log_start) &&
 			strings.Contains(line.Text, log_port) {
 			port_idx := strings.Index(line.Text, log_port)
@@ -64,7 +80,7 @@ func main() {
 			if err != nil {
 				panic(err)
 			}
-			fmt.Println("Got port:", port)
+			fmt.Println("Creating K8s service for FFmpeg port:", port)
 
 			clientset.CoreV1().Services(namespace).Create(context.TODO(), &apiv1.Service{
 				ObjectMeta: metav1.ObjectMeta{
@@ -78,8 +94,7 @@ func main() {
 					},
 				},
 				Spec: apiv1.ServiceSpec{
-					Type:           apiv1.ServiceTypeNodePort,
-					// LoadBalancerIP: "192.168.0.37",
+					Type: apiv1.ServiceTypeNodePort,
 					Selector: map[string]string{
 						"app": "homeassistant",
 					},
@@ -95,5 +110,36 @@ func main() {
 			},
 				metav1.CreateOptions{})
 		}
+	}
+}
+
+func cleanup_services(age time.Duration) {
+	fmt.Println("Cleaning up services older than", age)
+
+	// creates the in-cluster config
+	config, err := rest.InClusterConfig()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	// creates the clientset
+	clientset, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	namespace_bytes, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
+	if err != nil {
+		panic(err.Error())
+	}
+	namespace := string(namespace_bytes)
+
+	services, err := clientset.CoreV1().Services(namespace).List(context.TODO(), metav1.ListOptions{})
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for _, value := range services.Items {
+		fmt.Println("Service", value.Name, "created", value.CreationTimestamp.Sub(time.Now()).Minutes(), "minutes ago")
 	}
 }
