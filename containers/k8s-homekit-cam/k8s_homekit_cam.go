@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"io"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/nxadm/tail"
 	apiv1 "k8s.io/api/core/v1"
@@ -25,7 +27,7 @@ func main() {
 	flagCleanupPtr := flag.String("cleanup", nil, "delete K8s services older than DURATION")
 	flagMonitorPtr := flag.String("monitor", nil, "log file to monitor")
 	flag.Parse()
-)
+
 	flagCleanup := *flagCleanupPtr
 	flagMonitor := *flagMonitorPtr
 
@@ -33,7 +35,7 @@ func main() {
 		duration, err := time.ParseDuration(flagCleanup)
 		if err != nil {
 			panic(err.Error())
-		}	
+		}
 		cleanup_services(duration)
 	}
 
