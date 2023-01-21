@@ -24,14 +24,14 @@ const port_digits = 5
 func main() {
 	fmt.Println("Starting k8s-homekit-cam...")
 
-	flagCleanupPtr := flag.String("cleanup", nil, "delete K8s services older than DURATION")
-	flagMonitorPtr := flag.String("monitor", nil, "log file to monitor")
+	flagCleanupPtr := flag.String("cleanup", "", "delete K8s services older than DURATION")
+	flagMonitorPtr := flag.String("monitor", "", "log file to monitor")
 	flag.Parse()
 
 	flagCleanup := *flagCleanupPtr
 	flagMonitor := *flagMonitorPtr
 
-	if flagCleanup != nil && len(flagCleanup) > 0 {
+	if len(flagCleanup) > 0 {
 		duration, err := time.ParseDuration(flagCleanup)
 		if err != nil {
 			panic(err.Error())
@@ -39,7 +39,7 @@ func main() {
 		cleanup_services(duration)
 	}
 
-	if flagMonitor != nil && len(flagMonitor) > 0 {
+	if len(flagMonitor) > 0 {
 		tail_file(flagMonitor)
 	}
 }
