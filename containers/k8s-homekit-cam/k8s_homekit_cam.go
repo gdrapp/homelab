@@ -117,7 +117,7 @@ func tail_file(filename string) {
 }
 
 func cleanup_services(max_service_age time.Duration) {
-	fmt.Println("Cleaning up services older than", max_service_age)
+	fmt.Println("Deleting services older than", max_service_age)
 
 	// creates the in-cluster config
 	config, err := rest.InClusterConfig()
@@ -145,7 +145,11 @@ func cleanup_services(max_service_age time.Duration) {
 	for _, value := range services.Items {
 		if  time.Since(value.CreationTimestamp.Time) > max_service_age &&
 			strings.HasPrefix(value.Name, service_name_prefix) {
-			fmt.Println("Found aged out camera service", value.Name, "created", time.Since(value.CreationTimestamp.Time).Minutes(), "ago")
+			fmt.Println("Deleting aged out camera service", value.Name, "created", time.Since(value.CreationTimestamp.Time).Minutes(), "minutes ago")
+			err := clientset.CoreV1().Services(namespace).Delete(context.TODO(), value.Name, metav1.DeleteOptions{})
+			if err != nil {
+				fmt.Println("Error deleting service", value.Name, ":", err.Error())
+			}		
 		}
 	}
 }
