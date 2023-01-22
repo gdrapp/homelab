@@ -20,6 +20,7 @@ import (
 const log_start = "Start FFmpeg with"
 const log_port = "rtcpport="
 const port_digits = 5
+const service_name_prefix = "homekit-cam"
 
 func main() {
 	fmt.Println("Starting k8s-homekit-cam...")
@@ -86,14 +87,14 @@ func tail_file(filename string) {
 
 			clientset.CoreV1().Services(namespace).Create(context.TODO(), &apiv1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name:      fmt.Sprintf("homekit-cam-%s", port),
+					Name:      fmt.Sprintf("%s-%s", service_name_prefix, port),
 					Namespace: namespace,
 					Labels: map[string]string{
 						"app": "homeassistant",
 					},
-					Annotations: map[string]string{
-						"metallb.universe.tf/allow-shared-ip": "homekit",
-					},
+					// Annotations: map[string]string{
+					// 	"metallb.universe.tf/allow-shared-ip": "homekit",
+					// },
 				},
 				Spec: apiv1.ServiceSpec{
 					Type: apiv1.ServiceTypeNodePort,
@@ -115,7 +116,7 @@ func tail_file(filename string) {
 	}
 }
 
-func cleanup_services(age time.Duration) {
+func cleanup_services(service_age time.Duration) {
 	fmt.Println("Cleaning up services older than", age)
 
 	// creates the in-cluster config
@@ -142,6 +143,9 @@ func cleanup_services(age time.Duration) {
 	}
 
 	for _, value := range services.Items {
-		fmt.Println("Service", value.Name, "created", value.CreationTimestamp.Sub(time.Now()).Minutes(), "minutes ago")
+		if  time.Since(value.CreationTimestamp) > service_age &&
+			strings.HasPrefix(value.Name, service_name_prefix) {
+			fmt.Println("Found aged out camera service", value.Name, "created", time.Since(value.CreationTimestamp).Minutes(), "ago")
+		}
 	}
 }
