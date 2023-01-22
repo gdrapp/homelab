@@ -116,8 +116,8 @@ func tail_file(filename string) {
 	}
 }
 
-func cleanup_services(service_age time.Duration) {
-	fmt.Println("Cleaning up services older than", age)
+func cleanup_services(max_service_age time.Duration) {
+	fmt.Println("Cleaning up services older than", max_service_age)
 
 	// creates the in-cluster config
 	config, err := rest.InClusterConfig()
@@ -143,9 +143,9 @@ func cleanup_services(service_age time.Duration) {
 	}
 
 	for _, value := range services.Items {
-		if  time.Since(value.CreationTimestamp) > service_age &&
+		if  time.Since(value.CreationTimestamp.Time) > max_service_age &&
 			strings.HasPrefix(value.Name, service_name_prefix) {
-			fmt.Println("Found aged out camera service", value.Name, "created", time.Since(value.CreationTimestamp).Minutes(), "ago")
+			fmt.Println("Found aged out camera service", value.Name, "created", time.Since(value.CreationTimestamp.Time).Minutes(), "ago")
 		}
 	}
 }
