@@ -1,6 +1,12 @@
 # Home Lab Kubernetes Infrastructure
 
-## Components
+## Docker Images
+
+| Image | Description |
+| --------- | ----------- |
+| k8s-homekit-cam | Allows HomeKit cameras to work in K8s with Home Assistant |
+
+## Kubernetes Workloads
 
 | Component | Description |
 | --------- | ----------- |

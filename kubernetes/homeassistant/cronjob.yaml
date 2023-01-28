@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: k8s-homekit-cam-service-cleanup
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: homeassistant
+          containers:
+          - name: k8s-homekit-cam-service-cleanup
+            image: ghcr.io/gdrapp/k8s-homekit-cam:k8s-homekit-cam
+            imagePullPolicy: Always
+            args: ["--cleanup", "60m"]
+          restartPolicy: OnFailure

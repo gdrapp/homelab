@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homeassistant
+subjects:
+- kind: ServiceAccount
+  name: homeassistant
+roleRef:
+  kind: Role
+  name: homeassistant
+  apiGroup: rbac.authorization.k8s.io
