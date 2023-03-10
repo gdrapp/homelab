@@ -11,7 +11,7 @@ resources:
 images:
   - name: homeassistant
     newName: ghcr.io/home-assistant/home-assistant
-    newTag: 2022.11.2
+    newTag: 2023.2.5
   - name: hass-configurator
     newName: causticlab/hass-configurator-docker
     newTag: 0.5.2
