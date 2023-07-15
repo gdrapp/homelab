@@ -34,7 +34,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value={{date 'YYYYMMDD-hhmmss' tz='America/New_York'}}
+            type=raw,value={{date 'YYYYMMDD-HHmmss' tz='America/New_York'}}
             type=raw,value=latest,enable=${{ github.ref_name }},enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
             type=raw,value=${{ github.ref_name }},enable=${{ github.ref != format('refs/heads/{0}', 'master') }}
 
