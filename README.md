@@ -5,6 +5,7 @@
 | Image | Description |
 | --------- | ----------- |
 | k8s-homekit-cam | Allows HomeKit cameras to work in K8s with Home Assistant |
+| nut | Network UPS Tools |
 
 ## Kubernetes Workloads
 
@@ -35,3 +36,4 @@
 | grafana | Grafana visualization tool |
 | influxdb | InfluxDB time series database |
 | cloudflared | Cloudflare Tunnel daemon |
+| nut | Network UPS Tools |
