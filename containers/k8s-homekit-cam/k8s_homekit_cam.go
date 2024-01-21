@@ -68,7 +68,7 @@ func tail_file(filename string) {
 
 	// Create a tail
 	t, err := tail.TailFile(
-		filename, tail.Config{Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: io.SeekEnd}})
+		filename, tail.Config{Follow: true, ReOpen: true, Poll: true, Location: &tail.SeekInfo{Offset: 0, Whence: io.SeekEnd}})
 	if err != nil {
 		panic(err)
 	}
