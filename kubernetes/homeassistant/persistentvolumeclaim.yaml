@@ -4,14 +4,14 @@ metadata:
   creationTimestamp: null
   labels:
     app: homeassistant
-  name: homeassistant-config
+  name: homeassistant-config-nfs
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: homelab-longhorn
+    - ReadWriteMany
+  storageClassName: ""
   resources:
     requests:
-      storage: 5Gi
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

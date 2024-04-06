@@ -4,11 +4,11 @@ metadata:
   creationTimestamp: null
   labels:
     app: esphome
-  name: esphome-config
+  name: esphome-config-nfs
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: homelab-longhorn
+    - ReadWriteMany
+  storageClassName: ""
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi

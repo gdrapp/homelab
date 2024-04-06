@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: kea-dhcp4
-          image: ghcr.io/gdrapp/kea-container:master
+          image: kea
           imagePullPolicy: IfNotPresent
           command: ["/usr/sbin/kea-dhcp4", "-c", "/etc/kea/kea-dhcp4.conf"]
           ports:
@@ -43,4 +43,4 @@ spec:
             name: kea
         - name: dhcp4-leases
           persistentVolumeClaim:
-            claimName: dhcp4-leases
+            claimName: kea-leases

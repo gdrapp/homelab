@@ -4,5 +4,10 @@ namespace: kea
 resources:
   - namespace.yaml
   - service.yaml
+  - persistentvolume.yaml
   - persistentvolumeclaim.yaml
   - statefulset.yaml
+images:
+  - name: kea
+    newName: docker.cloudsmith.io/isc/docker/kea-dhcp4
+    newTag: 2.5.2

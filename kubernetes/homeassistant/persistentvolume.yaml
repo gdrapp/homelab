@@ -10,5 +10,20 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: synology.gregrapp.net
+    server: 192.168.0.8
     path: "/volume1/homeassistant-media"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    app: homeassistant
+  name: homeassistant-config
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 192.168.0.8
+    path: "/volume1/homeassistant-config"

@@ -4,11 +4,11 @@ metadata:
   creationTimestamp: null
   labels:
     app: kea
-  name: dhcp4-leases
+  name: kea-leases
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: homelab-longhorn
+    - ReadWriteMany
+  storageClassName: ""
   resources:
     requests:
       storage: 100Mi

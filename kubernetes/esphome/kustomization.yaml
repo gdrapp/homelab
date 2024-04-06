@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: esphome
 resources:
   - namespace.yaml
+  - persistentvolume.yaml
   - persistentvolumeclaim.yaml
   - statefulset.yaml
   - service.yaml
@@ -10,4 +11,4 @@ resources:
 images:
   - name: esphome
     newName: ghcr.io/esphome/esphome
-    newTag: 2023.4.1
+    newTag: 2023.9.3

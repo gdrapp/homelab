@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: mysql
 resources:
   - namespace.yaml
+  - persistentvolume.yaml
   - persistentvolumeclaim.yaml
   - statefulset.yaml
   - service.yaml

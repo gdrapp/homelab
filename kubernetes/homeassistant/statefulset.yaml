@@ -82,19 +82,19 @@ spec:
             limits:
               memory: 32Mi
               cpu: 100m
-        - name: k8s-homekit-cam
-          image: ghcr.io/gdrapp/k8s-homekit-cam:k8s-homekit-cam
-          imagePullPolicy: Always
-          args: ["--monitor", "/hass-config/home-assistant.log"]
-          volumeMounts:
-            - mountPath: /hass-config
-              name: homeassistant-config
-              readOnly: true
+        # - name: k8s-homekit-cam
+        #   image: ghcr.io/gdrapp/k8s-homekit-cam:k8s-homekit-cam
+        #   imagePullPolicy: Always
+        #   args: ["--monitor", "/hass-config/home-assistant.log"]
+        #   volumeMounts:
+        #     - mountPath: /hass-config
+        #       name: homeassistant-config
+        #       readOnly: true
       priorityClassName: high
       volumes:
         - name: homeassistant-config
           persistentVolumeClaim:
-            claimName: homeassistant-config
+            claimName: homeassistant-config-nfs
         - name: homeassistant-media
           persistentVolumeClaim:
             claimName: homeassistant-media
