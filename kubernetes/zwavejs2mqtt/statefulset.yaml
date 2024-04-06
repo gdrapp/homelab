@@ -45,4 +45,4 @@ spec:
       volumes:
         - name: zwave-config
           persistentVolumeClaim:
-            claimName: zwave-config
+            claimName: zwavejs-config

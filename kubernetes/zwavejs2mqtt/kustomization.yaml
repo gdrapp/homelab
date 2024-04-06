@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: zwavejs2mqtt
 resources:
   - namespace.yaml
+  - persistentvolume.yaml
   - persistentvolumeclaim.yaml
   - statefulset.yaml
   - service.yaml
@@ -10,4 +11,4 @@ resources:
 images:
   - name: zwavejs2mqtt
     newName: zwavejs/zwave-js-ui
-    newTag: 8.14.2
+    newTag: 9.9.1

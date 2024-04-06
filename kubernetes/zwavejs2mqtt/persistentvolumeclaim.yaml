@@ -4,11 +4,11 @@ metadata:
   creationTimestamp: null
   labels:
     app: zwavejs2mqtt
-  name: zwave-config
+  name: zwavejs-config
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: homelab-longhorn
+    - ReadWriteMany
+  storageClassName: ""
   resources:
     requests:
       storage: 500Mi
