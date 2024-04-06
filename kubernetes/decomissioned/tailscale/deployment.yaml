@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tailscale
+  labels:
+    app: tailscale
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tailscale
+  template:
+    metadata:
+      labels:
+        app: tailscale
+    spec:
+      serviceAccountName: "tailscale"
+      initContainers:
+        - name: get-ts-key
+          command: [ "/opt/gk-init.sh" ]
+          image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
+          volumeMounts:
+            - mountPath: /opt/tsconf
+              name: tsconf
+          env:
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale-auth
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale-auth
+                  key: CLIENT_SECRET
+      containers:
+        - name: tailscale
+          image: tailscale
+          imagePullPolicy: Always
+          env:
+            - name: TS_KUBE_SECRET
+              value: "tailscale-auth"
+            - name: TS_USERSPACE
+              value: "true"
+            - name: TS_EXTRA_ARGS
+              value: "--advertise-exit-node"
+            - name: TS_AUTH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale-auth
+                  key: TS_AUTH_KEY
+                  # optional: true
+            - name: TS_ROUTES
+              value: "192.168.0.0/24"
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          # resources:
+          #   requests:
+          #     memory: 32Mi
+          #     cpu: 10m
+          #   limits:
+          #     memory: 64Mi
+          #     cpu: 20m
+      priorityClassName: highest

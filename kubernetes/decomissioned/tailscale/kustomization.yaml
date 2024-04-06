@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: tailscale
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - role.yaml
+  - rolebinding.yaml
+  - serviceaccount.yaml
+images:
+  - name: tailscale
+    newName: ghcr.io/tailscale/tailscale
+    newTag: latest
