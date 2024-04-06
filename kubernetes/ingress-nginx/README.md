@@ -3,7 +3,7 @@
 ## Deploying
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.4.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.5/deploy/static/provider/cloud/deploy.yaml
 ```
 
 To check if the ingress controller pods have started, run the following command:
@@ -11,6 +11,14 @@ To check if the ingress controller pods have started, run the following command:
 ```bash
 kubectl get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx --watch
 ```
+## Upgrading
+
+- Delete the existing deployment
+```bash
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.5/deploy/static/provider/cloud/deploy.yaml
+```
+
+- Follow instructions above to deploy new version
 
 ## Tips
 
