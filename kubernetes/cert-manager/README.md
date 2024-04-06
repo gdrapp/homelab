@@ -3,7 +3,7 @@
 ## Deploying
 
 ```bash
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.9.1/cert-manager.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.7/cert-manager.yaml
 ```
 
 ## Verifying the install
