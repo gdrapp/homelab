@@ -88,7 +88,7 @@ Perform steps on each node in the cluster.
 
 1. Drain the node to be upgraded
 ```bash
-kubectl drain server2 --ignore-daemonsets=true --delete-emptydir-data
+kubectl drain $(hostname) --ignore-daemonsets=true --delete-emptydir-data
 ```
 
 2. Replace the k3s binary at /usr/local/bin with new version
@@ -104,5 +104,5 @@ chown root.root k3s
 
 4. Uncordon node (allow pods to return)
 ```bash
-kubectl uncordon server2
+kubectl uncordon $(hostname)
 ```
