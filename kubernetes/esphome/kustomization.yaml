@@ -11,4 +11,4 @@ resources:
 images:
   - name: esphome
     newName: ghcr.io/esphome/esphome
-    newTag: 2023.9.3
+    newTag: 2024.3.1
