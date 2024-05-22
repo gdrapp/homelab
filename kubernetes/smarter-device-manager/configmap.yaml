@@ -6,5 +6,5 @@ data:
   conf.yaml: |
     - devicematch: ^zwave$
       nummaxdevices: 1
-    - devicematch: ^zigbee$
+    - devicematch: ^zigbee.*$
       nummaxdevices: 1
