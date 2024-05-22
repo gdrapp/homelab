@@ -41,7 +41,7 @@ spec:
               memory: 512Mi
               cpu: 100m
             limits:
-              smarter-devices/zigbee: 1
+              smarter-devices/zigbee_sky: 1
         - name: hass-configurator
           image: hass-configurator
           imagePullPolicy: IfNotPresent
