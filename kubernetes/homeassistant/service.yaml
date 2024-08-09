@@ -91,3 +91,15 @@ spec:
       targetPort: 21066
       protocol: TCP
   externalTrafficPolicy: Local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: homeassistant
+  name: piper
+spec:
+  selector:
+    app: homeassistant
+  ports:
+    - port: 10200

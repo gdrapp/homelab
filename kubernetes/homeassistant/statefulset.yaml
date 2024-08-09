@@ -90,6 +90,21 @@ spec:
         #     - mountPath: /hass-config
         #       name: homeassistant-config
         #       readOnly: true
+        - name: piper
+          image: piper
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: piper
+              containerPort: 10200
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: America/New_York
+            - name: PIPER_VOICE
+              value: en_US-lessac-medium
       priorityClassName: high
       volumes:
         - name: homeassistant-config
