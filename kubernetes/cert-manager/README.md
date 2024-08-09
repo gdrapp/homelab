@@ -30,3 +30,9 @@ kubectl create secret generic cloudflare-credentials -n cert-manager --from-lite
 ```
 kubectl apply -f clusterissuer.yaml
 ```
+
+3. Patch the cert-manager deployment to use an external nameserver for DNS01 propagation check
+
+```
+kubectl -n cert-manager patch deployment cert-manager --type='json' -p='[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--dns01-recursive-nameservers=1.1.1.1:53"}]'
+```
