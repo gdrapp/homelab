@@ -11,4 +11,4 @@ resources:
 images:
   - name: zwavejs2mqtt
     newName: zwavejs/zwave-js-ui
-    newTag: 9.9.1
+    newTag: 9.14.6
