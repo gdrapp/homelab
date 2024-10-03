@@ -9,20 +9,20 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - homeassistant.gregrapp.net
+        # - homeassistant.gregrapp.net
         - homeassistant-config.gregrapp.net
       secretName: homeassistant-tls
   rules:
-    - host: homeassistant.gregrapp.net
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: homeassistant
-                port:
-                  number: 8123
+    # - host: homeassistant.gregrapp.net
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: homeassistant
+    #             port:
+    #               number: 8123
     - host: homeassistant-config.gregrapp.net
       http:
         paths:
