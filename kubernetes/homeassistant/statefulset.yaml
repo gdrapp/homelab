@@ -30,6 +30,9 @@ spec:
               name: homeassistant-config
             - mountPath: /media
               name: homeassistant-media
+            - name: docker-env-empty
+              mountPath: /.dockerenv
+              subPath: .dockerenvv
           livenessProbe:
             initialDelaySeconds: 30
             periodSeconds: 15
@@ -113,3 +116,5 @@ spec:
         - name: homeassistant-media
           persistentVolumeClaim:
             claimName: homeassistant-media
+        - name: docker-env-empty
+          emptyDir: {}
